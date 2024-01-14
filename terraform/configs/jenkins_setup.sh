@@ -1,22 +1,16 @@
+#!/bin/bash
 sudo apt update && sudo apt upgrade -y
-
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
 /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
 https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
 /etc/apt/sources.list.d/jenkins.list > /dev/null
-
 sudo apt install openjdk-11-jdk -y
-
 sudo apt install apache2 -y
-
 sudo apt-get update
 sudo apt-get install jenkins
-
 sudo mkdir /etc/apache2/ssl
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
-
 sudo bash -c 'cat > /etc/apache2/sites-available/000-default.conf << EOF
 <VirtualHost *:80>
    ServerName localhost
@@ -34,7 +28,6 @@ sudo bash -c 'cat > /etc/apache2/sites-available/000-default.conf << EOF
    ProxyPassReverse / http://localhost:8080/
 </VirtualHost>
 EOF'
-
 sudo bash -c 'cat > /etc/apache2/mods-available/proxy.conf << EOF
 <IfModule mod_proxy.c>
 ProxyPass         /  http://localhost:8080/ nocanon
@@ -48,20 +41,15 @@ AllowEncodedSlashes NoDecode
 </Proxy>
 </IfModule>
 EOF'
-
 sudo a2enmod ssl
 sudo a2enmod proxy
 sudo a2enmod proxy_http
 sudo a2enmod rewrite
 sudo a2enmod headers
-
-sudo vim /etc/default/jenkins
-
+sudo bash -c 'cat > /etc/default/jenkins << E0F
 HTTP_HOST=127.0.0.1
 JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --httpListenAddress=$HTTP_HOST"
-
-sudo vim /etc/sudoers
-#jenkins ALL=(ALL) NOPASSWD: ALL
-
+E0F'
+echo 'jenkins ALL=(ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers
 sudo systemctl restart apache2
 sudo systemctl restart jenkins
