@@ -33,8 +33,8 @@ resource "aws_instance" "jenkins-server" {
 
 
 resource "aws_security_group" "jenkins-server" {
-  name        = "WebServer Security Group 3"
-  description = "My First SecurityGroup"
+  name        = "Jenkins Security Group"
+  description = "jenkins main security group"
   vpc_id      = aws_default_vpc.jenkins-default-vpc.id
 
   ingress {

@@ -10,7 +10,9 @@ sudo apt install apache2 -y
 sudo apt-get update
 sudo apt-get install jenkins
 sudo mkdir /etc/apache2/ssl
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
+sudo openssl req -x509 -days 365 -newkey rsa:2048 -nodes \
+ -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt \
+ -subj "/C=US/ST=Admin/L=Zhytomyr/0=Dis/CN=www.example.com" 
 sudo bash -c 'cat > /etc/apache2/sites-available/000-default.conf << EOF
 <VirtualHost *:80>
    ServerName localhost
