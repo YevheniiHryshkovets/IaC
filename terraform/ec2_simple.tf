@@ -23,9 +23,9 @@ resource "aws_instance" "webserver-test" {
   vpc_security_group_ids = [aws_security_group.webserver-test.id]
   key_name               = "0712mac"
   # user_data              = data.template_file.init.rendered
-  user_data = file("./setup_docker.sh")
+  user_data = file("wildfly_setup.sh")
   tags = {
-    Name  = "Web Server"
+    Name  = "Wildfly Example v4"
     Owner = "Admin"
   }
 }
@@ -53,6 +53,13 @@ resource "aws_security_group" "webserver-test" {
   ingress {
     from_port   = 443
     to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
