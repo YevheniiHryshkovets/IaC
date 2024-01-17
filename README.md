@@ -33,7 +33,7 @@ For checking more description about instances run:
 ```
 terraform plan
 ```
-For run instancess creation and try:
+For start instancess creation use that simple command, and don't forget type "yes" when terraform asc you about that:
 ```
 terraform apply
 ```
