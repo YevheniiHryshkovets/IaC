@@ -7,9 +7,8 @@ For git instalation go to https://git-scm.com/book/en/v2/Getting-Started-Install
 and take information about instalation on you operation system 
 
 clone repository command:
-git clone https://github.com/YevheniiHryshkovets/IaC.git
 ```
-https://git-scm.com/book/en/v2/Getting-Started-Installing-Git 
+git clone https://github.com/YevheniiHryshkovets/IaC.git
 ```
 Then you need to install terraform. Take more information about instalation on your OS there:
 https://developer.hashicorp.com/terraform/install
